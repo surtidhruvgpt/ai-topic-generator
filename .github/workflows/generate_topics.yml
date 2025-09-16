@@ -1,0 +1,43 @@
+name: 💡 Generate New Topics
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: 'Select the domain for the new topics'
+        required: true
+        type: choice
+        options:
+          - Psychology
+          - Teaching
+          - Accounting
+          - IT
+          - Engineering
+      number_of_topics:
+        description: 'How many new topics to generate?'
+        required: true
+        default: '5'
+
+jobs:
+  generate-topics-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run topic generation script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOMAIN: ${{ github.event.inputs.domain }}
+          NUM_TOPICS: ${{ github.event.inputs.number_of_topics }}
+          REPO_NAME: ${{ github.repository }}
+        run: python generate_topics.py
