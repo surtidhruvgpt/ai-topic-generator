@@ -21,8 +21,11 @@ on:
 jobs:
   generate-topics-job:
     runs-on: ubuntu-latest
+    permissions:      # <-- Add this block
+      issues: write   # <-- To allow creating issues
+      contents: read  # <-- To allow checking out the code
     steps:
-      - name:  checkout repository
+      - name: checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
