@@ -41,8 +41,7 @@ def get_existing_topics(domain: str) -> list[str]:
 def generate_new_topics(existing_topics: list[str]) -> str:
     """Calls the Gemini API to generate new, unique topics."""
     print(f"🤖 Calling LLM to generate {NUM_TOPICS} new topics...")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={API_KEY}"
-    
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent?key={API_KEY}"    
     # Create a numbered list of existing topics to include in the prompt
     existing_topics_str = "\n".join(f"- {topic}" for topic in existing_topics)
 
